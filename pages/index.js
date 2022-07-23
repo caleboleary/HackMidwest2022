@@ -80,7 +80,7 @@ export default function Home({ profileId }) {
   }
 
   const selectDefaultProfile = async (selectedData) => {
-    const data = await fetch(`${API_URL}/me`, {
+    const data = await fetch(`${API_URL}/me?pouch-profile-id=${profileId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
