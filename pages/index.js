@@ -1,5 +1,4 @@
-import { Button, Grid } from "@mui/material";
-import Link from "next/link";
+import { Button, Grid, Typography } from "@mui/material";
 import React from 'react';
 import Profile from '../components/Profile';
 
@@ -50,7 +49,7 @@ export default function Home() {
         flexGrow={1}
         sx={{ height: "100%" }}
       >
-        <h2 sx={{color:'#602eb2'}}>Select a profile to start from</h2>
+        <Typography variant="h4" sx={{color:'#602eb2'}}>Select a profile to start from</Typography>
 
           {Object.values(DUMMY_USER_DATA).map((userObj) => {
             return <Button key={userObj.firstName} size="large" variant="contained" onClick={() => {
