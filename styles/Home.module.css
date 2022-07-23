@@ -1,5 +1,14 @@
-.container {
-  padding: 0 2rem;
+.containeroutter {
+  width:100vw;
+  height:100vh;
+  background-color: #eaeaea;
+}
+
+.containerinner {
+  padding: 2rem;
+  max-width: 500px;
+  margin: 0 auto;
+  background:white
 }
 
 .main {
@@ -10,6 +19,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.button {
+  font-size: 20px;
+  padding:20px;
 }
 
 .footer {
