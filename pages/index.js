@@ -84,6 +84,7 @@ export default function Home({ profileId }) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        'Cookie': 'pouch-profile-id='+profileId
       },
       body: JSON.stringify(selectedData)
     });
