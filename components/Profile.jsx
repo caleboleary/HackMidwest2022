@@ -16,7 +16,7 @@ const getAgeFromDOB = (dobStr) => {
 const Profile = ({ userData }) => {
   return (
     <div>
-      <Typography variant='h3'>Hey {userData.data.firstName},</Typography>
+      <Typography sx={{marginBottom:'20px'}} variant='h5'>Hey {userData.data.firstName},</Typography>
       <Divider />
       <Expandable title="Demographics" defaultExpanded={true}>
       <p>First name: {userData.data.firstName}</p>

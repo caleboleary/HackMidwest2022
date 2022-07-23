@@ -2,8 +2,8 @@ import { Button, Grid, Typography } from "@mui/material";
 import React from 'react';
 import Profile from '../components/Profile';
 
-const API_URL = 'https://api-rmtl2t3ega-uc.a.run.app';
-// const API_URL = 'https://pouch-api.forhaley.com';
+// const API_URL = 'https://api-rmtl2t3ega-uc.a.run.app';
+const API_URL = 'https://pouch-api.forhaley.com';
 
 const DUMMY_USER_DATA = {
   katy: {
@@ -95,7 +95,7 @@ export default function Home() {
         flexGrow={1}
         sx={{ height: "100%" }}
       >
-        <Typography variant="h4" sx={{color:'#602eb2'}}>Select a profile to start from</Typography>
+        <Typography variant="h5" sx={{color:'#602eb2'}}>Select a profile to start from</Typography>
 
           {Object.values(DUMMY_USER_DATA).map((userObj) => {
             return <Button key={userObj.firstName} size="large" variant="contained" onClick={() => {
