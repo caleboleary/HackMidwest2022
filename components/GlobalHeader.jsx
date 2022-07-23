@@ -2,7 +2,7 @@ import React from "react";
 import { AppBar, Grid, Typography, Dialog } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../img/pouch-logo-inv.png";
+import logo from "../img/pouch-logo-inv-text.png";
 
 const GlobalHeader = () => {
 
@@ -18,15 +18,11 @@ const GlobalHeader = () => {
         >
           <Link href="/">
             <>
-              <Image src={logo} height={40} width={40} />
-              <Typography variant="h6" sx={{ margin: "0 10px" }}>
-                POUCH
-              </Typography>
+              <Image src={logo} height={40} width={112} />
             </>
           </Link>
         </Grid>
       </AppBar>
-
     </>
   );
 };

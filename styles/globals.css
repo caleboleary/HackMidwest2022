@@ -16,9 +16,9 @@ a {
 }
 
 .MuiBottomNavigation-root {
-  background: #602eb2;
+  background: #602eb2!important;
 }
 
 .MuiBottomNavigationAction-root {
-  color: white
+  color: white!important;
 }

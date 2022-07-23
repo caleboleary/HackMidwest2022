@@ -1,24 +1,24 @@
 import { Button, Grid, Typography } from "@mui/material";
 import React from 'react';
 import Profile from '../components/Profile';
+import nookies from 'nookies';
 
-// const API_URL = 'https://api-rmtl2t3ega-uc.a.run.app';
 const API_URL = 'https://pouch-api.forhaley.com';
 
 const DUMMY_USER_DATA = {
   katy: {
-    firstName: 'Katy', 
+    firstName: 'Katy',
     lastName: 'Smith',
     demographics: {
       dob: '01/01/1990',
       address: '909 Walnut St, Kansas City, MO',
       surgery: true,
-    }, 
+    },
     insurance: {
-      cardPhotoURL: 'asdf', 
+      cardPhotoURL: 'asdf',
     },
     allergy: [
-      {name: 'grass', diagnosed: '01/01/2010', severity: 'severe'}
+      { name: 'grass', diagnosed: '01/01/2010', severity: 'severe' }
     ],
     PHQ9: {
       score: 8,
@@ -34,10 +34,10 @@ const DUMMY_USER_DATA = {
       surgery: true,
     },
     insurance: {
-      cardPhotoURL: 'asdf', 
+      cardPhotoURL: 'asdf',
     },
     allergy: [
-      {name: 'grass', diagnosed: '01/01/2010', severity: 'severe'}
+      { name: 'grass', diagnosed: '01/01/2010', severity: 'severe' }
     ],
     PHQ9: {
       score: 8,
@@ -51,12 +51,12 @@ const DUMMY_USER_DATA = {
       dob: '01/01/1990',
       address: '909 Walnut St, Kansas City, MO',
       surgery: true,
-    }, 
+    },
     insurance: {
-      cardPhotoURL: 'asdf', 
+      cardPhotoURL: 'asdf',
     },
     allergy: [
-      {name: 'grass', diagnosed: '01/01/2010', severity: 'severe'}
+      { name: 'grass', diagnosed: '01/01/2010', severity: 'severe' }
     ],
     PHQ9: {
       score: 8,
@@ -65,7 +65,7 @@ const DUMMY_USER_DATA = {
   }
 }
 
-export default function Home() {
+export default function Home({ profileId }) {
   const [muhData, setMuhData] = React.useState({});
 
   const fetchMe = async () => {
@@ -87,7 +87,7 @@ export default function Home() {
 
   return (
     <div>
-      {muhData.data?.firstName ? <Profile userData={muhData}/> : <Grid
+      {muhData.data?.firstName ? <Profile userData={muhData} /> : <Grid
         container
         justifyContent="space-between"
         alignItems="center"
@@ -95,17 +95,43 @@ export default function Home() {
         flexGrow={1}
         sx={{ height: "100%" }}
       >
-        <Typography variant="h5" sx={{color:'#602eb2'}}>Select a profile to start from</Typography>
+        <Typography variant="h5" sx={{ color: '#602eb2' }}>Select a profile to start from</Typography>
 
-          {Object.values(DUMMY_USER_DATA).map((userObj) => {
-            return <Button key={userObj.firstName} size="large" variant="contained" onClick={() => {
-              setMuhData({...muhData, data: userObj})
-            }}>
-              {userObj.firstName}
-            </Button>
-          })}
+        {Object.values(DUMMY_USER_DATA).map((userObj) => {
+          return <Button key={userObj.firstName} size="large" variant="contained" onClick={() => {
+            setMuhData({ ...muhData, data: userObj })
+          }}>
+            {userObj.firstName}
+          </Button>
+        })}
 
       </Grid>}
     </div>
   );
+}
+
+
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx)
+
+  console.log('cookies', cookies);
+
+  if (!cookies['pouch-profile-id']) {
+    const data = await fetch(`${API_URL}/me`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await data.json();
+    console.log(json.id)
+    nookies.set(ctx, 'pouch-profile-id', json.id, {
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+    })
+    return { props: { profileId: json.id } };
+
+  }
+
+  return { props: { profileId: cookies['pouch-profile-id'] } };
 }

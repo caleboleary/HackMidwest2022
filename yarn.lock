@@ -832,6 +832,11 @@
   dependencies:
     "safe-buffer" "~5.1.1"
 
+"cookie@^0.4.1":
+  "integrity" "sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA=="
+  "resolved" "https://registry.npmjs.org/cookie/-/cookie-0.4.2.tgz"
+  "version" "0.4.2"
+
 "core-js-pure@^3.20.2":
   "integrity" "sha512-8t78LdpKSuCq4pJYCYk8hl7XEkAX+BP16yRIwL3AanTksxuEf7CM83vRyctmiEL8NDZ3jpUcv56fk9/zG3aIuw=="
   "resolved" "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.23.5.tgz"
@@ -1779,6 +1784,14 @@
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.6.tgz"
   "version" "2.0.6"
 
+"nookies@^2.5.2":
+  "integrity" "sha512-x0TRSaosAEonNKyCrShoUaJ5rrT5KHRNZ5DwPCuizjgrnkpE5DRf3VL7AyyQin4htict92X1EQ7ejDbaHDVdYA=="
+  "resolved" "https://registry.npmjs.org/nookies/-/nookies-2.5.2.tgz"
+  "version" "2.5.2"
+  dependencies:
+    "cookie" "^0.4.1"
+    "set-cookie-parser" "^2.4.6"
+
 "object-assign@^4.1.1":
   "integrity" "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="
   "resolved" "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
@@ -2081,6 +2094,11 @@
   "version" "7.3.7"
   dependencies:
     "lru-cache" "^6.0.0"
+
+"set-cookie-parser@^2.4.6":
+  "integrity" "sha512-cHMAtSXilfyBePduZEBVPTCftTQWz6ehWJD5YNUg4mqvRosrrjKbo4WS8JkB0/RxonMoohHm7cOGH60mDkRQ9w=="
+  "resolved" "https://registry.npmjs.org/set-cookie-parser/-/set-cookie-parser-2.5.0.tgz"
+  "version" "2.5.0"
 
 "shebang-command@^2.0.0":
   "integrity" "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA=="
