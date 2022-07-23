@@ -50,10 +50,10 @@ export default function Home() {
         flexGrow={1}
         sx={{ height: "100%" }}
       >
-        <h2>Select a profile to start from</h2>
+        <h2 sx={{color:'#602eb2'}}>Select a profile to start from</h2>
 
           {Object.values(DUMMY_USER_DATA).map((userObj) => {
-            return <Button size="large" variant="contained" onClick={() => {
+            return <Button key={userObj.firstName} size="large" variant="contained" onClick={() => {
               setMuhData({...muhData, data: userObj})
             }}>
               {userObj.firstName}
