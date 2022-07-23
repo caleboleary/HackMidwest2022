@@ -24,3 +24,12 @@ a {
     background: black;
   }
 }
+
+.MuiBottomNavigation-root {
+  background: #602eb2;
+  color:white;
+}
+
+.MuiBottomNavigationAction-root {
+  color: white
+}

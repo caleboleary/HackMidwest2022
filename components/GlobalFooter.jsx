@@ -10,6 +10,7 @@ const GlobalFooter = () => {
   return (
     <BottomNavigation
       showLabels
+    
     >
       <BottomNavigationAction label="Terms of Use" />
       <BottomNavigationAction
