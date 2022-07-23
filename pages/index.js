@@ -69,7 +69,7 @@ export default function Home({ profileId }) {
   const [muhData, setMuhData] = React.useState({});
 
   const fetchMe = async () => {
-    const data = await fetch(`${API_URL}/me`, {
+    const data = await fetch(`${API_URL}/me?pouch-profile-id=${profileId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
