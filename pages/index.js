@@ -79,6 +79,18 @@ export default function Home({ profileId }) {
     setMuhData(json);
   }
 
+  const selectDefaultProfile = async (selectedData) => {
+    const data = await fetch(`${API_URL}/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(selectedData)
+    });
+    const json = await data.json();
+    setMuhData(json);
+  }
+
   React.useEffect(() => {
     fetchMe();
   }, []);
@@ -98,7 +110,8 @@ export default function Home({ profileId }) {
         <Typography variant="h5" sx={{ color: '#602eb2' }}>Select a profile to start from</Typography>
 
         {Object.values(DUMMY_USER_DATA).map((userObj) => {
-          return <Button key={userObj.firstName} size="large" variant="contained" onClick={() => {
+          return <Button key={userObj.firstName} size="large" variant="contained" onClick={async () => {
+            await selectDefaultProfile(userObj)
             setMuhData({ ...muhData, data: userObj })
           }}>
             {userObj.firstName}
