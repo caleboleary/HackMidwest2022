@@ -128,7 +128,6 @@ export default function Home({ profileId }) {
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx)
 
-  console.log('cookies', cookies);
 
   if (!cookies['pouch-profile-id']) {
     const data = await fetch(`${API_URL}/me`, {
