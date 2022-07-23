@@ -141,6 +141,9 @@ export async function getServerSideProps(ctx) {
     nookies.set(ctx, 'pouch-profile-id', json.id, {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
+      secure: false,
+      httpOnly: false,
+      domain: 'forhaley.com'
     })
     return { props: { profileId: json.id } };
 
