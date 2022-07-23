@@ -3,19 +3,65 @@ import React from 'react';
 import Profile from '../components/Profile';
 
 const API_URL = 'https://api-rmtl2t3ega-uc.a.run.app';
+// const API_URL = 'https://pouch-api.forhaley.com';
 
 const DUMMY_USER_DATA = {
   katy: {
     firstName: 'Katy', 
-    lastName: 'Smith'
+    lastName: 'Smith',
+    demographics: {
+      dob: '01/01/1990',
+      address: '909 Walnut St, Kansas City, MO',
+      surgery: true,
+    }, 
+    insurance: {
+      cardPhotoURL: 'asdf', 
+    },
+    allergy: [
+      {name: 'grass', diagnosed: '01/01/2010', severity: 'severe'}
+    ],
+    PHQ9: {
+      score: 8,
+      completed: '01/01/2019 1:06:00pm'
+    }
   },
   john: {
     firstName: 'John',
     lastName: 'Smith',
+    demographics: {
+      dob: '01/01/1990',
+      address: '909 Walnut St, Kansas City, MO',
+      surgery: true,
+    },
+    insurance: {
+      cardPhotoURL: 'asdf', 
+    },
+    allergy: [
+      {name: 'grass', diagnosed: '01/01/2010', severity: 'severe'}
+    ],
+    PHQ9: {
+      score: 8,
+      completed: '01/01/2019 1:06:00pm'
+    }
   },
   alex: {
     firstName: 'Alex',
-    lastName: 'Smith'
+    lastName: 'Smith',
+    demographics: {
+      dob: '01/01/1990',
+      address: '909 Walnut St, Kansas City, MO',
+      surgery: true,
+    }, 
+    insurance: {
+      cardPhotoURL: 'asdf', 
+    },
+    allergy: [
+      {name: 'grass', diagnosed: '01/01/2010', severity: 'severe'}
+    ],
+    PHQ9: {
+      score: 8,
+      completed: '01/01/2019 1:06:00pm'
+    }
   }
 }
 

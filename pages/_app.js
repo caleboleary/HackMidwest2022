@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }) {
           sx={{
             background: "white",
             padding: "20px",
+            overflow:'scroll',
             height: "calc( 100vh - 112px )",
             "& > div": {
               height: "100%",
