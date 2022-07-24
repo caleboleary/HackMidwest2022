@@ -43,7 +43,7 @@ const DUMMY_USER_DATA = {
     },
     allergy: [
       { name: 'cat', diagnosed: '11/12/2001', severity: 'severe' },
-      { name: 'tree nut', diagnosed: '02/17/2000', severity: 'mild'}
+      { name: 'tree nut', diagnosed: '02/17/2000', severity: 'mild' }
     ],
     PHQ9: {
       score: 16,
@@ -62,16 +62,23 @@ const DUMMY_USER_DATA = {
       cardPhotoURL: 'asdf',
     },
     allergy: [
-      { name: 'peanut', diagnosed: '06/08/1999', severity: 'severe'},
-      { name: 'eggs', diagnosed: '06/08/1999', severity: 'severe'},
-      { name: 'shellfish', diagnosed: '06/08/1999', severity: 'severe'},
-      { name: 'dog', diagnosed: '12/12/1990', severity: 'mild'}
+      { name: 'peanut', diagnosed: '06/08/1999', severity: 'severe' },
+      { name: 'eggs', diagnosed: '06/08/1999', severity: 'severe' },
+      { name: 'shellfish', diagnosed: '06/08/1999', severity: 'severe' },
+      { name: 'dog', diagnosed: '12/12/1990', severity: 'mild' }
     ],
     PHQ9: {
       score: 21,
       completed: '10/07/2021 12:01:19pm'
     }
   }
+}
+
+export const dataRequestNameMap = {
+  demographics: 'Demographics & History',
+  insurance: 'Insurance Information',
+  PHQ9: 'PHQ-9',
+  allergy: 'Known Allergies'
 }
 
 const findAlertOpts = provider => {
@@ -84,8 +91,8 @@ const findAlertOpts = provider => {
           id: 'dr-stark'
         },
         requests: [
-          'Demographics & History',
-          'Insurance Information'
+          'demographics',
+          'insurance'
         ]
       }
     case 'mentalhealth':
@@ -96,9 +103,9 @@ const findAlertOpts = provider => {
           id: 'dr-neral'
         },
         requests: [
-          'Demographics & History',
-          'Insurance Information',
-          'PHQ-9'
+          'demographics',
+          'insurance',
+          'PHQ9'
         ]
       }
     case 'allergy':
@@ -109,16 +116,16 @@ const findAlertOpts = provider => {
           id: 'dr-oleary'
         },
         requests: [
-          'Demographics & History',
-          'Known Allergies',
-          'Insurance Information'
+          'demographics',
+          'allergy',
+          'insurance'
         ]
       }
 
   }
 }
 
-export default function Home ({ profileId }) {
+export default function Home({ profileId }) {
   const [muhData, setMuhData] = React.useState({});
   const [drData, setDrData] = React.useState([]);
   const [alertOpen, setAlertOpen] = React.useState(false);
@@ -170,12 +177,37 @@ export default function Home ({ profileId }) {
     setMuhData(json);
   }
 
+  const grantDrAccess = async (drId, drName, sharedData) => {
+    const data = await fetch(`${API_URL}/dr/me?pouch-profile-id=${profileId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': 'pouch-profile-id=' + profileId
+      },
+      body: JSON.stringify({
+        dr: {
+          id: drId,
+          name: drName
+        },
+        drID: drId,
+        patient: sharedData,
+        profileID: profileId
+
+      })
+    });
+    const json = await data.json();
+  }
+
   const handleAlertClose = () => {
     setAlertOpen(false)
     setAlertOpts(false)
   }
 
-  const handleAlertSubmit = () => {
+  const handleAlertSubmit = async (drId, drName, sharedData) => {
+    //send doctor data to endpoint
+    await grantDrAccess(drId, drName, sharedData);
+    //re-get doctor data
+    await fetchDr();
     setAlertOpen(false)
     setAlertOpts(false)
   }
@@ -188,6 +220,7 @@ export default function Home ({ profileId }) {
   if (!muhData.data) return <div>Loading...</div>
 
   console.log('profileId', profileId)
+  console.log('drdata', drData)
 
   return (
     <div>
@@ -218,12 +251,17 @@ export default function Home ({ profileId }) {
           {drData && drData.length > 0 && drData.map(d => <DoctorData key={d.drID} data={d} />)}
         </Expandable>
       )}
-      <AlertModal open={alertOpen} title='Check-In' onClose={handleAlertClose} onSubmit={handleAlertSubmit}>
+      <AlertModal open={alertOpen} title='Check-In' onClose={handleAlertClose} onSubmit={() => {
+        handleAlertSubmit(alertOpts.doctor.id, alertOpts.doctor.name, alertOpts.requests.reduce((acc, currKey) => {
+          acc[currKey] = muhData.data[currKey]
+          return acc;
+        }, {}))
+      }}>
         {alertOpts && <Typography variant='h5'>{alertOpts.doctor.office}</Typography>}
         <br />
         {alertOpts && <Typography variant='body1'>{alertOpts.doctor.name}</Typography>}
         <List>
-          {alertOpts && alertOpts.requests.map(req => <ListItem key={req}>- {req}</ListItem>)}
+          {alertOpts && alertOpts.requests.map(req => <ListItem key={req}>- {dataRequestNameMap[req]}</ListItem>)}
         </List>
       </AlertModal>
     </div>
@@ -231,7 +269,7 @@ export default function Home ({ profileId }) {
 }
 
 
-export async function getServerSideProps (ctx) {
+export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx)
 
 
