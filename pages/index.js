@@ -192,10 +192,21 @@ export default function Home({ profileId }) {
         drID: drId,
         patient: sharedData,
         profileID: profileId,
-        ...(drId === 'dr-oleary' ? {activeRx: ['levocitirizine']} : {})
+        // ...(drId === 'dr-oleary' ? {activeRx: ['levocitirizine']} : {})
       })
     });
     const json = await data.json();
+
+    if (drId === 'dr-oleary') {
+      const data2 = await fetch(`${API_URL}/me?pouch-profile-id=${profileId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Cookie': 'pouch-profile-id=' + profileId
+        },
+        body: JSON.stringify({ activeRx: ['levocitirizine'] })
+      });
+    }
   }
 
   const handleAlertClose = () => {
