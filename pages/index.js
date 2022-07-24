@@ -1,6 +1,7 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography, List, ListItem } from "@mui/material";
 import React from 'react';
 import Profile from '../components/Profile';
+import AlertModal from '../components/AlertModal';
 import nookies from 'nookies';
 
 const API_URL = 'https://pouch-api.forhaley.com';
@@ -65,8 +66,62 @@ const DUMMY_USER_DATA = {
   }
 }
 
-export default function Home({ profileId }) {
+const findAlertOpts = provider => {
+  switch (provider) {
+    case 'primary-care':
+      return {
+        doctor: {
+          office: 'Kansas City Physicians',
+          name: 'Dr. Stark is requesting'
+        },
+        requests: [
+          'Demographics & History',
+          'Insurance Information'
+        ]
+      }
+    case 'mentalhealth':
+      return {
+        doctor: {
+          office: 'KC Mental Health',
+          name: 'Dr. Neral is requesting'
+        },
+        requests: [
+          'Demographics & History',
+          'Insurance Information',
+          'PHQ-9'
+        ]
+      }
+    case 'allergy':
+      return {
+        doctor: {
+          office: 'Allergy KC',
+          name: 'Dr. O\'Leary is requesting'
+        },
+        requests: [
+          'Demographics & History',
+          'Known Allergies',
+          'Insurance Information'
+        ]
+      }
+
+  }
+}
+
+export default function Home ({ profileId }) {
   const [muhData, setMuhData] = React.useState({});
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [alertOpts, setAlertOpts] = React.useState();
+  const [provider, setProvider] = React.useState();
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const provider = params.get('provider')
+    setProvider(provider)
+    if (provider) {
+      setAlertOpen(true)
+      setAlertOpts(findAlertOpts(provider))
+    }
+  }, [])
 
   const fetchMe = async () => {
     const data = await fetch(`${API_URL}/me?pouch-profile-id=${profileId}`, {
@@ -84,12 +139,22 @@ export default function Home({ profileId }) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'Cookie': 'pouch-profile-id='+profileId
+        'Cookie': 'pouch-profile-id=' + profileId
       },
       body: JSON.stringify(selectedData)
     });
     const json = await data.json();
     setMuhData(json);
+  }
+
+  const handleAlertClose = () => {
+    setAlertOpen(false)
+    setAlertOpts(false)
+  }
+
+  const handleAlertSubmit = () => {
+    setAlertOpen(false)
+    setAlertOpts(false)
   }
 
   React.useEffect(() => {
@@ -120,12 +185,20 @@ export default function Home({ profileId }) {
         })}
 
       </Grid>}
+      <AlertModal open={alertOpen} title='Check-In' onClose={handleAlertClose} onSubmit={handleAlertSubmit}>
+        {alertOpts && <Typography variant='h5'>{alertOpts.doctor.office}</Typography>}
+        <br />
+        {alertOpts && <Typography variant='body1'>{alertOpts.doctor.name}</Typography>}
+        <List>
+          {alertOpts && alertOpts.requests.map(req => <ListItem key={req}>- {req}</ListItem>)}
+        </List>
+      </AlertModal>
     </div>
   );
 }
 
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps (ctx) {
   const cookies = nookies.get(ctx)
 
 
