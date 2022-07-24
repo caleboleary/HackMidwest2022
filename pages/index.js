@@ -2,6 +2,8 @@ import { Button, Grid, Typography, List, ListItem } from "@mui/material";
 import React from 'react';
 import Profile from '../components/Profile';
 import AlertModal from '../components/AlertModal';
+import DoctorData from '../components/DoctorData';
+import Expandable from "../components/Expandable";
 import nookies from 'nookies';
 
 const API_URL = 'https://pouch-api.forhaley.com';
@@ -78,7 +80,8 @@ const findAlertOpts = provider => {
       return {
         doctor: {
           office: 'Kansas City Physicians',
-          name: 'Dr. Stark is requesting'
+          name: 'Dr. Stark is requesting',
+          id: 'dr-stark'
         },
         requests: [
           'Demographics & History',
@@ -89,7 +92,8 @@ const findAlertOpts = provider => {
       return {
         doctor: {
           office: 'KC Mental Health',
-          name: 'Neral, LPC is requesting'
+          name: 'Neral, LPC is requesting',
+          id: 'dr-neral'
         },
         requests: [
           'Demographics & History',
@@ -101,7 +105,8 @@ const findAlertOpts = provider => {
       return {
         doctor: {
           office: 'Allergy KC',
-          name: 'Dr. O\'Leary is requesting'
+          name: 'Dr. O\'Leary is requesting',
+          id: 'dr-oleary'
         },
         requests: [
           'Demographics & History',
@@ -115,6 +120,7 @@ const findAlertOpts = provider => {
 
 export default function Home ({ profileId }) {
   const [muhData, setMuhData] = React.useState({});
+  const [drData, setDrData] = React.useState([]);
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [alertOpts, setAlertOpts] = React.useState();
   const [provider, setProvider] = React.useState();
@@ -138,6 +144,17 @@ export default function Home ({ profileId }) {
     });
     const json = await data.json();
     setMuhData(json);
+  }
+
+  const fetchDr = async () => {
+    const data = await fetch(`${API_URL}/dr/me?pouch-profile-id=${profileId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await data.json();
+    setDrData(json);
   }
 
   const selectDefaultProfile = async (selectedData) => {
@@ -165,9 +182,12 @@ export default function Home ({ profileId }) {
 
   React.useEffect(() => {
     fetchMe();
+    fetchDr();
   }, []);
 
   if (!muhData.data) return <div>Loading...</div>
+
+  console.log('profileId', profileId)
 
   return (
     <div>
@@ -191,6 +211,13 @@ export default function Home ({ profileId }) {
         })}
 
       </Grid>}
+
+      {muhData.data?.firstName && (
+        <Expandable title="Providers you are linked to">
+          {drData && drData.length == 0 && <p>No data.</p>}
+          {drData && drData.length > 0 && drData.map(d => <DoctorData key={d.drID} data={d} />)}
+        </Expandable>
+      )}
       <AlertModal open={alertOpen} title='Check-In' onClose={handleAlertClose} onSubmit={handleAlertSubmit}>
         {alertOpts && <Typography variant='h5'>{alertOpts.doctor.office}</Typography>}
         <br />
