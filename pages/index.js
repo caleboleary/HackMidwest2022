@@ -191,8 +191,8 @@ export default function Home({ profileId }) {
         },
         drID: drId,
         patient: sharedData,
-        profileID: profileId
-
+        profileID: profileId,
+        ...(drId === 'dr-oleary' ? {activeRx: ['levocitirizine']} : {})
       })
     });
     const json = await data.json();
