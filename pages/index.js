@@ -11,57 +11,63 @@ const DUMMY_USER_DATA = {
     firstName: 'Katy',
     lastName: 'Smith',
     demographics: {
-      dob: '01/01/1990',
-      address: '909 Walnut St, Kansas City, MO',
-      surgery: true,
+      dob: '05/16/2000',
+      address: '5100 Oak St, Unit 505, Kansas City, MO',
+      surgery: false,
     },
     insurance: {
       cardPhotoURL: 'asdf',
     },
     allergy: [
-      { name: 'grass', diagnosed: '01/01/2010', severity: 'severe' }
+      { name: 'bee', diagnosed: '05/29/2015', severity: 'severe' },
+      { name: 'grass', diagnosed: '02/05/2007', severity: 'mild' },
+      { name: 'lima bean', diagnosed: '04/25/2005', severity: 'mild' }
     ],
     PHQ9: {
-      score: 8,
-      completed: '01/01/2019 1:06:00pm'
+      score: 7,
+      completed: '07/23/2022 1:06:35pm'
     }
   },
   john: {
     firstName: 'John',
     lastName: 'Smith',
     demographics: {
-      dob: '01/01/1990',
-      address: '909 Walnut St, Kansas City, MO',
+      dob: '09/23/1990',
+      address: '909 Walnut St, Unit 207, Kansas City, MO',
       surgery: true,
     },
     insurance: {
       cardPhotoURL: 'asdf',
     },
     allergy: [
-      { name: 'grass', diagnosed: '01/01/2010', severity: 'severe' }
+      { name: 'cat', diagnosed: '11/12/2001', severity: 'severe' },
+      { name: 'tree nut', diagnosed: '02/17/2000', severity: 'mild'}
     ],
     PHQ9: {
-      score: 8,
-      completed: '01/01/2019 1:06:00pm'
+      score: 16,
+      completed: '09/28/2020 5:23:10pm'
     }
   },
   alex: {
     firstName: 'Alex',
-    lastName: 'Smith',
+    lastName: 'Sharp',
     demographics: {
-      dob: '01/01/1990',
-      address: '909 Walnut St, Kansas City, MO',
+      dob: '01/01/1988',
+      address: '1444 Grand Blvd, Unit 417, Kansas City, MO',
       surgery: true,
     },
     insurance: {
       cardPhotoURL: 'asdf',
     },
     allergy: [
-      { name: 'grass', diagnosed: '01/01/2010', severity: 'severe' }
+      { name: 'peanut', diagnosed: '06/08/1999', severity: 'severe'},
+      { name: 'eggs', diagnosed: '06/08/1999', severity: 'severe'},
+      { name: 'shellfish', diagnosed: '06/08/1999', severity: 'severe'},
+      { name: 'dog', diagnosed: '12/12/1990', severity: 'mild'}
     ],
     PHQ9: {
-      score: 8,
-      completed: '01/01/2019 1:06:00pm'
+      score: 21,
+      completed: '10/07/2021 12:01:19pm'
     }
   }
 }
