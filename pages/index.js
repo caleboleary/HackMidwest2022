@@ -83,7 +83,7 @@ const findAlertOpts = provider => {
       return {
         doctor: {
           office: 'KC Mental Health',
-          name: 'Dr. Neral is requesting'
+          name: 'Neral, LPC is requesting'
         },
         requests: [
           'Demographics & History',
